@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "target": "ES2018",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+  },
+  "include": [
+    "src/**/*",
+  ],
+  "exclude": [
+    "dist"
+  ],
+}

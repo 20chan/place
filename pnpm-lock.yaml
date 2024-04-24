@@ -6,13 +6,20 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.4.5
 
   packages/be:
     dependencies:
       '@place/lib':
         specifier: workspace:*
         version: link:../lib
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.5
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -23,9 +30,15 @@ importers:
         specifier: ^4.7.5
         version: 4.7.5
     devDependencies:
+      '@types/cors':
+        specifier: ^2.8.17
+        version: 2.8.17
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
 
   packages/fe:
     dependencies:
@@ -70,7 +83,14 @@ importers:
         specifier: ^5
         version: 5.4.5
 
-  packages/lib: {}
+  packages/lib:
+    devDependencies:
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+      typescript:
+        specifier: ^5
+        version: 5.4.5
 
 packages:
 
@@ -349,7 +369,6 @@ packages:
     resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
     dependencies:
       '@types/node': 20.12.7
-    dev: false
 
   /@types/express-serve-static-core@4.19.0:
     resolution: {integrity: sha512-bGyep3JqPCRry1wq+O5n7oiBgGWmeIJXPjXXCo8EK0u8duZGSYar7cGqd3ML2JUsLGeB7fmc06KYo9fLGWqPvQ==}
@@ -3185,7 +3204,6 @@ packages:
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}

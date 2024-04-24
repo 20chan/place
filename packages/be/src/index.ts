@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import cors from 'cors';
 import { createServer } from 'http';
 import { createSocket } from './socket';
 
@@ -9,15 +10,15 @@ const app = express();
 const server = createServer(app);
 const io = createSocket(server);
 
+app.use(cors());
 app.use(express.json());
 
 const router = express.Router();
 
 const board = new Map<string, number>();
 
-router.get('/hi', (req, res) => {
-  res.send('Hello World!');
-  io.emit('hi', 'Hello World!');
+router.get('/map', (req, res) => {
+  res.json([...board].map(([key, value]) => [...key.split(',').map(Number), value]));
 });
 
 router.post('/draw', (req, res) => {
@@ -32,7 +33,7 @@ router.post('/draw', (req, res) => {
   board.set(`${x},${y}`, c);
   io.emit('draw', [x, y, c]);
 
-  res.send('ok');
+  return res.send('ok');
 });
 
 app.use('/api', router);
