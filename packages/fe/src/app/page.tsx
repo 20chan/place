@@ -3,7 +3,6 @@
 import { useSocket } from '@/components/socket';
 import { Colors } from '@/lib/colors';
 import { use, useCallback, useEffect, useRef, useState } from 'react';
-import { TestDrawer } from './TestDrawer';
 import { Palette } from './Palette';
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
     const x = Math.floor((e.clientX - offset[0]) / zoom);
     const y = Math.floor((e.clientY - offset[1]) / zoom);
 
-    console.log(color)
     requestDraw(x, y, color);
   }, [color]);
 
@@ -29,7 +27,6 @@ export default function Home() {
     }
 
     socket.on('draw', (data) => {
-      console.log(data);
       draw(data);
     });
 
@@ -90,10 +87,6 @@ export default function Home() {
   return (
     <div>
       <canvas ref={ref} />
-
-      <div className='fixed z-10 right-0 top-0'>
-        <TestDrawer />
-      </div>
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>
         <Palette color={color} setColor={setColor} />
