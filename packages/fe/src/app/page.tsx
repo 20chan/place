@@ -75,7 +75,12 @@ export default function Home() {
 
   return (
     <div>
-      <canvas ref={ref} />
+      <canvas
+        ref={ref}
+        style={{
+          imageRendering: 'pixelated',
+        }}
+      />
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>
         <Palette color={color} setColor={setColor} />

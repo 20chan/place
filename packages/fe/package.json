@@ -11,6 +11,7 @@
   "dependencies": {
     "@place/lib": "workspace:*",
     "next": "14.2.2",
+    "panzoom": "^9.4.3",
     "react": "^18",
     "react-dom": "^18",
     "socket.io-client": "^4.7.5"
