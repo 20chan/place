@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import panzoom, { PanZoom } from 'panzoom';
+import panzoom, { PanZoom } from '@20chan/panzoom';
 
 export function useCanvas({
   onClick,

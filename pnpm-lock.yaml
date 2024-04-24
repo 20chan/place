@@ -42,15 +42,15 @@ importers:
 
   packages/fe:
     dependencies:
+      '@20chan/panzoom':
+        specifier: ^9.4.4
+        version: 9.4.4
       '@place/lib':
         specifier: workspace:*
         version: link:../lib
       next:
         specifier: 14.2.2
         version: 14.2.2(react-dom@18.2.0)(react@18.2.0)
-      panzoom:
-        specifier: ^9.4.3
-        version: 9.4.3
       react:
         specifier: ^18
         version: 18.2.0
@@ -96,6 +96,14 @@ importers:
         version: 5.4.5
 
 packages:
+
+  /@20chan/panzoom@9.4.4:
+    resolution: {integrity: sha512-K7WZSYzWZ8+FIhGtBaCwpTSOpEcNUd7ca2MSozMpYMjwfXHKOgaXCAVwDvzpqcfrXb0i0mcyNJ2OZK7OzwSgag==}
+    dependencies:
+      amator: 1.1.0
+      ngraph.events: 1.2.2
+      wheel: 1.0.0
+    dev: false
 
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -2492,14 +2500,6 @@ packages:
     dependencies:
       p-limit: 3.1.0
     dev: true
-
-  /panzoom@9.4.3:
-    resolution: {integrity: sha512-xaxCpElcRbQsUtIdwlrZA90P90+BHip4Vda2BC8MEb4tkI05PmR6cKECdqUCZ85ZvBHjpI9htJrZBxV5Gp/q/w==}
-    dependencies:
-      amator: 1.1.0
-      ngraph.events: 1.2.2
-      wheel: 1.0.0
-    dev: false
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
