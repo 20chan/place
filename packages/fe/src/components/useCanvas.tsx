@@ -24,13 +24,11 @@ export function useCanvas({
       return;
     }
 
-    ref.current.width = window.innerWidth;
-    ref.current.height = window.innerHeight;
-
     setPz(panzoom(ref.current, {
       maxZoom: 20,
       minZoom: 0.1,
-      smoothScroll: true,
+      smoothScroll: false,
+      onDoubleClick: () => { return false; },
     }));
 
     const context = ref.current.getContext('2d');
@@ -38,6 +36,7 @@ export function useCanvas({
       context.imageSmoothingEnabled = false;
       (context as any).mozImageSmoothingEnabled = false;
       (context as any).webkitImageSmoothingEnabled = false;
+
       setCtx(context);
     }
   }, [ref.current]);

@@ -37,17 +37,27 @@ export default function Home() {
   }, [socket]);
 
   useEffect(() => {
-    if (!ctx) {
+    if (!ref.current || !ctx) {
       return;
     }
 
     fetch(`${SERVER_URL}/api/map`).then(async res => {
-      const data = await res.json();
-      data.forEach((xs: [number, number, number]) => {
+      const data = await res.json() as {
+        width: number;
+        height: number;
+        coords: [number, number, number][];
+      };
+
+      ref.current!.width = data.width;
+      ref.current!.height = data.height;
+
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, data.width, data.height);
+      data.coords.forEach((xs: [number, number, number]) => {
         draw(xs);
       });
     });
-  }, [ctx]);
+  }, [ref, ctx]);
 
   function requestDraw(x: number, y: number, c: number) {
     fetch(`${SERVER_URL}/api/draw`, {

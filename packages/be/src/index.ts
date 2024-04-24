@@ -16,9 +16,17 @@ app.use(express.json());
 const router = express.Router();
 
 const board = new Map<string, number>();
+const width = 4000;
+const height = 3000;
 
 router.get('/map', (req, res) => {
-  res.json([...board].map(([key, value]) => [...key.split(',').map(Number), value]));
+  const coords = [...board].map(([key, value]) => [...key.split(',').map(Number), value]);
+
+  res.json({
+    width,
+    height,
+    coords,
+  });
 });
 
 router.post('/draw', (req, res) => {
@@ -26,7 +34,7 @@ router.post('/draw', (req, res) => {
   if (typeof x !== 'number' || typeof y !== 'number' || typeof c !== 'number') {
     return res.status(400).send('Invalid input');
   }
-  if (x < 0 || x > 800 || y < 0 || y > 600 || c < 0 || c > 15 || !Number.isInteger(c)) {
+  if (x < 0 || x >= width || y < 0 || y >= height || c < 0 || c > 15 || !Number.isInteger(c)) {
     return res.status(400).send('Invalid input');
   }
 

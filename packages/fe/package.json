@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@20chan/panzoom": "^9.4.4",
+    "@20chan/panzoom": "^9.4.5",
     "@place/lib": "workspace:*",
     "next": "14.2.2",
     "react": "^18",

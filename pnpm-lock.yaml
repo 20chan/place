@@ -43,8 +43,8 @@ importers:
   packages/fe:
     dependencies:
       '@20chan/panzoom':
-        specifier: ^9.4.4
-        version: 9.4.4
+        specifier: ^9.4.5
+        version: 9.4.5
       '@place/lib':
         specifier: workspace:*
         version: link:../lib
@@ -97,8 +97,8 @@ importers:
 
 packages:
 
-  /@20chan/panzoom@9.4.4:
-    resolution: {integrity: sha512-K7WZSYzWZ8+FIhGtBaCwpTSOpEcNUd7ca2MSozMpYMjwfXHKOgaXCAVwDvzpqcfrXb0i0mcyNJ2OZK7OzwSgag==}
+  /@20chan/panzoom@9.4.5:
+    resolution: {integrity: sha512-4X/W04NuhE2Fx+CoBCh9hA+mXBR+BytJHE5pQiMMzwIzY0LoZp9JbgFcYam3eUg3xzMyJiyPEOgzXG2cqQOi8Q==}
     dependencies:
       amator: 1.1.0
       ngraph.events: 1.2.2
