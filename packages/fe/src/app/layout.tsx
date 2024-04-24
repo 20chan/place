@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SocketProvider } from '@/components/socket';
+import { SERVER_URL } from '@/lib/consts';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SocketProvider url="http://localhost:4200" path='/api/socket'>
+        <SocketProvider url={SERVER_URL} path='/api/socket'>
           {children}
         </SocketProvider>
       </body>
