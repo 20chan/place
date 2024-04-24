@@ -1,4 +1,18 @@
 export const Colors = [
   'white',
   'black',
+  '#ff4500',
+  '#ffa800',
+  '#ffd635',
+  '#00a368',
+  '#7eed56',
+  '#2450a4',
+  '#3690ea',
+  '#51e9f4',
+  '#811e9f',
+  '#b44ac0',
+  '#ff99aa',
+  '#9c6926',
+  '#898d90',
+  '#d4d7c9',
 ] as const;
