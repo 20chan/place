@@ -15,6 +15,7 @@ export default function Home() {
   const {
     ref,
     ctx,
+    pz,
   } = useCanvas({
     onClick: useCallback((x, y) => {
       draw([x, y, color]);
@@ -37,7 +38,7 @@ export default function Home() {
   }, [socket]);
 
   useEffect(() => {
-    if (!ref.current || !ctx) {
+    if (!ref.current || !ctx || !pz) {
       return;
     }
 
@@ -51,13 +52,15 @@ export default function Home() {
       ref.current!.width = data.width;
       ref.current!.height = data.height;
 
+      pz.moveTo(data.width / 2, 0);
+
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, data.width, data.height);
       data.coords.forEach((xs: [number, number, number]) => {
         draw(xs);
       });
     });
-  }, [ref, ctx]);
+  }, [ref, ctx, pz]);
 
   function requestDraw(x: number, y: number, c: number) {
     fetch(`${SERVER_URL}/api/draw`, {

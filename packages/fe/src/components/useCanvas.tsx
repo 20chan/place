@@ -84,5 +84,6 @@ export function useCanvas({
   return {
     ref,
     ctx,
+    pz,
   };
 }

@@ -16,8 +16,8 @@ app.use(express.json());
 const router = express.Router();
 
 const board = new Map<string, number>();
-const width = 4000;
-const height = 3000;
+const width = 1000;
+const height = 1000;
 
 router.get('/map', (req, res) => {
   const coords = [...board].map(([key, value]) => [...key.split(',').map(Number), value]);
