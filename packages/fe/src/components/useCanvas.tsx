@@ -25,7 +25,7 @@ export function useCanvas({
     }
 
     setPz(panzoom(ref.current, {
-      maxZoom: 20,
+      maxZoom: 40,
       minZoom: 0.1,
       smoothScroll: false,
       onDoubleClick: () => { return false; },

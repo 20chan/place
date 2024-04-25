@@ -5,6 +5,8 @@ import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
 import { createSocket } from './socket';
+import { redis } from './redis';
+import * as board from './board';
 
 const app = express();
 const server = createServer(app);
@@ -15,45 +17,51 @@ app.use(express.json());
 
 const router = express.Router();
 
-const board = new Map<string, number>();
-const width = 1000;
-const height = 1000;
-
-router.get('/map', (req, res) => {
-  const coords = [...board].map(([key, value]) => [...key.split(',').map(Number), value]);
-
+router.get('/info', async (req, res) => {
+  const conn = await redis.get('conn');
   res.json({
-    width,
-    height,
-    coords,
+    width: board.WIDTH,
+    height: board.HEIGHT,
+    conn,
   });
 });
 
-router.post('/draw', (req, res) => {
+router.get('/bitmap', async (req, res) => {
+  const buffer = await board.bitmap();
+  res.write(buffer, 'binary', () => res.end(null, 'binary'));
+});
+
+router.post('/draw', async (req, res) => {
   const { x, y, c } = req.body;
-  if (typeof x !== 'number' || typeof y !== 'number' || typeof c !== 'number') {
-    return res.status(400).send('Invalid input');
+  try {
+    await board.set(x, y, c);
+    io.emit('draw', [x, y, c]);
+    res.json({ ok: true });
+  } catch {
+    res.status(400).send('Invalid input');
   }
-  if (x < 0 || x >= width || y < 0 || y >= height || c < 0 || c > 15 || !Number.isInteger(c)) {
-    return res.status(400).send('Invalid input');
-  }
-
-  board.set(`${x},${y}`, c);
-  io.emit('draw', [x, y, c]);
-
-  return res.send('ok');
 });
 
 app.use('/api', router);
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+io.on('connection', async (socket) => {
+  const cnt = await redis.incr('conn');
+  socket.emit('count', cnt);
+
+  socket.on('disconnect', async () => {
+    const cnt = await redis.decr('conn');
+    socket.emit('count', cnt);
   });
 });
 
-const PORT = process.env.PORT ?? 3000;
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+async function main() {
+  await board.init();
+
+  const PORT = process.env.PORT ?? 3000;
+  server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+main()
+  .catch(console.error);

@@ -5,7 +5,7 @@
   },
   "files": [],
   "references": [
-    { "path": "packages/lib/tsconfig.json" },
+    { "path": "packages/fe/tsconfig.json" },
     { "path": "packages/be/tsconfig.json" },
   ],
   "exclude": [

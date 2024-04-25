@@ -42,11 +42,10 @@ export default function Home() {
       return;
     }
 
-    fetch(`${SERVER_URL}/api/map`).then(async res => {
+    fetch(`${SERVER_URL}/api/info`).then(async res => {
       const data = await res.json() as {
         width: number;
         height: number;
-        coords: [number, number, number][];
       };
 
       ref.current!.width = data.width;
@@ -56,8 +55,27 @@ export default function Home() {
 
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, data.width, data.height);
-      data.coords.forEach((xs: [number, number, number]) => {
-        draw(xs);
+
+      await fetch(`${SERVER_URL}/api/bitmap`).then(async res => {
+        const buffer = await res.arrayBuffer();
+        const u8 = new Uint8Array(buffer);
+
+        for (let y = 0; y < data.height; y++) {
+          for (let x = 0; x < data.width; x++) {
+            const index = Math.floor((x + y * data.width) / 2);
+            const value = u8[index];
+            const isUpper = (x + y * data.width) % 2 === 0;
+            const c = (
+              isUpper
+                ? (value & 0xf0) >> 4
+                : value & 0x0f
+            )
+
+            if (c !== 0) {
+              draw([x, y, c]);
+            }
+          }
+        }
       });
     });
   }, [ref, ctx, pz]);
