@@ -59,6 +59,8 @@ export default function Home() {
       ctx.fillRect(0, 0, data.width, data.height);
 
       await fetch(`${SERVER_URL}/api/bitmap`).then(async res => {
+        const imageData = ctx.createImageData(data.width, data.height);
+
         const buffer = await res.arrayBuffer();
         const u8 = new Uint8Array(buffer);
 
@@ -72,12 +74,19 @@ export default function Home() {
                 ? (value & 0xf0) >> 4
                 : value & 0x0f
             )
+            const r = parseInt(Colors[c].slice(1, 3), 16);
+            const g = parseInt(Colors[c].slice(3, 5), 16);
+            const b = parseInt(Colors[c].slice(5, 7), 16);
 
-            if (c !== 0) {
-              draw([x, y, c]);
-            }
+            const i = (x + y * data.width) * 4;
+            imageData.data[i] = r;
+            imageData.data[i + 1] = g;
+            imageData.data[i + 2] = b;
+            imageData.data[i + 3] = 255;
           }
         }
+
+        ctx.putImageData(imageData, 0, 0);
       });
     });
   }, [ref, ctx, pz]);
