@@ -11,14 +11,15 @@ export function CursorOverlay({
   canvasRef: React.RefObject<HTMLCanvasElement>;
   color: number;
 }) {
-  if (!pz) {
-    return null;
-  }
 
   const [cursorPos, setCursorPos] = useState([0, 0]);
-  const [cursorScale, setCursorScale] = useState(pz.getTransform().scale);
+  const [cursorScale, setCursorScale] = useState(pz?.getTransform().scale ?? 1);
 
   const handleCursor = (e: MouseEvent) => {
+    if (!pz) {
+      return;
+    }
+
     const t = pz.getTransform();
 
     const coord = [
@@ -46,6 +47,10 @@ export function CursorOverlay({
   }, [canvasRef.current]);
 
   const handleWheel = () => {
+    if (!pz) {
+      return;
+    }
+
     setCursorScale(pz.getTransform().scale);
   };
 
