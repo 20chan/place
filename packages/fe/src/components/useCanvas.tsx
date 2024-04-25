@@ -29,6 +29,7 @@ export function useCanvas({
       minZoom: 0.1,
       smoothScroll: false,
       onDoubleClick: () => { return false; },
+      onTouch: () => { return false; },
     }));
 
     const context = ref.current.getContext('2d');

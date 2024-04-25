@@ -105,13 +105,15 @@ export default function Home() {
   }, [ctx]);
 
   return (
-    <div>
-      <canvas
-        ref={ref}
-        style={{
-          imageRendering: 'pixelated',
-        }}
-      />
+    <div className='w-screen h-screen'>
+      <div className='relative'>
+        <canvas
+          ref={ref}
+          style={{
+            imageRendering: 'pixelated',
+          }}
+        />
+      </div>
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>
         <Palette color={color} setColor={setColor} />

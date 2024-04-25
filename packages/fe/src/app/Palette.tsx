@@ -8,7 +8,7 @@ export function Palette({
   setColor: (color: number) => void;
 }) {
   return (
-    <div className='flex flex-row bg-slate-200 gap-2 p-1'>
+    <div className='flex flex-row bg-slate-200 gap-2 p-1 flex-wrap w-80 md:w-[40rem] justify-center '>
       {Colors.map((c, i) => (
         <div
           key={c}
@@ -21,6 +21,7 @@ export function Palette({
               : 'none',
           }}
           onClick={() => setColor(i)}
+          onTouchStart={() => setColor(i)}
         />
       ))}
     </div>
