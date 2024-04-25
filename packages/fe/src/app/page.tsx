@@ -111,6 +111,7 @@ export default function Home() {
           ref={ref}
           style={{
             imageRendering: 'pixelated',
+            touchAction: 'manipulation',
           }}
         />
       </div>
