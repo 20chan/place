@@ -78,7 +78,9 @@ export function useCanvas({
     }
 
     return () => {
-      ref.current!.oncontextmenu = null;
+      if (ref.current) {
+        ref.current.oncontextmenu = null;
+      }
     };
   }, [ref.current]);
 

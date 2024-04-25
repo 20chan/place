@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Palette } from './Palette';
 import { SERVER_URL } from '@/lib/consts';
 import { useCanvas } from '@/components/useCanvas';
+import { CursorOverlay } from '@/components/CursorOverlay';
 
 export default function Home() {
   const { socket } = useSocket();
@@ -80,6 +81,16 @@ export default function Home() {
     });
   }, [ref, ctx, pz]);
 
+  useEffect(() => {
+    const handleContextmenu = (e: any) => {
+      e.preventDefault()
+    }
+    document.addEventListener('contextmenu', handleContextmenu)
+    return function cleanup() {
+      document.removeEventListener('contextmenu', handleContextmenu)
+    }
+  }, [])
+
   function requestDraw(x: number, y: number, c: number) {
     fetch(`${SERVER_URL}/api/draw`, {
       method: 'POST',
@@ -114,6 +125,8 @@ export default function Home() {
             touchAction: 'manipulation',
           }}
         />
+
+        <CursorOverlay pz={pz} canvasRef={ref} color={color} />
       </div>
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>
