@@ -1,5 +1,6 @@
 'use client';
 
+import rgbHex from 'rgb-hex';
 import { useSocket } from '@/components/socket';
 import { Colors } from '@/lib/colors';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -80,6 +81,38 @@ export default function Home() {
       });
     });
   }, [ref, ctx, pz]);
+
+  const handleWheelClick = useCallback((e: MouseEvent) => {
+    if (e.button !== 1 || !pz || !ctx) {
+      return;
+    }
+
+    const transform = pz.getTransform();
+
+    const x = Math.floor((e.clientX - transform.x) / transform.scale);
+    const y = Math.floor((e.clientY - transform.y) / transform.scale);
+
+    const data = ctx.getImageData(x, y, 1, 1).data;
+    const colorHex = `#${rgbHex(data[0], data[1], data[2])}`;
+
+    const c = Object.values(Colors).indexOf(colorHex as any);
+
+    setColor(c);
+  }, [pz, ctx]);
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    ref.current.addEventListener('mousedown', handleWheelClick);
+
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('mousedown', handleWheelClick);
+      }
+    }
+  }, [handleWheelClick]);
 
   useEffect(() => {
     const handleContextmenu = (e: any) => {
