@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "backup": "ts-node backup.ts"
   },
   "dependencies": {
     "canvas": "^2.11.2",
