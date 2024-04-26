@@ -6,6 +6,8 @@ fully implemented, deployed, but still in development
 
 ## TODO
 
+- [x] daily backup, history
+- [x] add screenshots to readme when it has a stack of pretty art
+- [ ] gallery of backups
 - [ ] authentication
-- [ ] daily backup, history
-- [ ] add screenshots to readme when it has a stack of pretty art
+- [ ] live cursor display
