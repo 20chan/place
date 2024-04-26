@@ -83,6 +83,14 @@ export function CursorOverlay({
         pointerEvents: 'none',
         outline: '1px solid black',
       }}
-    />
+    >
+      <div
+        style={{
+          width: '50%',
+          height: '50%',
+          backgroundColor: Colors[color],
+        }}
+      />
+    </div>
   );
 }
