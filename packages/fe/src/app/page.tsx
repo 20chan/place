@@ -13,16 +13,30 @@ export default function Home() {
   const { socket } = useSocket();
 
   const [color, setColor] = useState(0);
+  const size = 1;
+
+  const drawHandler = useCallback((x: number, y: number) => {
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        if (getColorAt(x + i, y + j) === color) {
+          continue;
+        }
+
+        draw([x + i, y + j, color]);
+        requestDraw(x + i, y + j, color);
+      }
+    }
+    draw([x, y, color]);
+    requestDraw(x, y, color);
+  }, [color]);
 
   const {
     ref,
     ctx,
     pz,
   } = useCanvas({
-    onClick: useCallback((x, y) => {
-      draw([x, y, color]);
-      requestDraw(x, y, color);
-    }, [color]),
+    onClick: drawHandler,
+    onDrag: drawHandler,
   });
 
   useEffect(() => {
@@ -91,6 +105,17 @@ export default function Home() {
     });
   }, [ref, ctx, pz]);
 
+  const getColorAt = useCallback((x: number, y: number) => {
+    if (!ctx) {
+      return;
+    }
+    const data = ctx.getImageData(x, y, 1, 1).data;
+    const colorHex = `#${rgbHex(data[0], data[1], data[2])}`;
+
+    const c = Object.values(Colors).indexOf(colorHex as any);
+    return c;
+  }, [ctx]);
+
   const handleWheelClick = useCallback((e: MouseEvent) => {
     if (e.button !== 1 || !pz || !ctx) {
       return;
@@ -101,13 +126,10 @@ export default function Home() {
     const x = Math.floor((e.clientX - transform.x) / transform.scale);
     const y = Math.floor((e.clientY - transform.y) / transform.scale);
 
-    const data = ctx.getImageData(x, y, 1, 1).data;
-    const colorHex = `#${rgbHex(data[0], data[1], data[2])}`;
-
-    const c = Object.values(Colors).indexOf(colorHex as any);
+    const c = getColorAt(x, y)!;
 
     setColor(c);
-  }, [pz, ctx]);
+  }, [pz, ctx, getColorAt]);
 
   useEffect(() => {
     if (!ref.current) {
@@ -168,7 +190,7 @@ export default function Home() {
           }}
         />
 
-        <CursorOverlay pz={pz} canvasRef={ref} color={color} />
+        <CursorOverlay pz={pz} canvasRef={ref} color={color} size={size} />
       </div>
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>

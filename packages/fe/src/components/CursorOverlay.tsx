@@ -3,10 +3,12 @@ import * as panzoom from '@20chan/panzoom';
 import { useEffect, useMemo, useState } from 'react';
 
 export function CursorOverlay({
+  size,
   pz,
   canvasRef,
   color,
 }: {
+  size: number;
   pz: panzoom.PanZoom | null;
   canvasRef: React.RefObject<HTMLCanvasElement>;
   color: number;
@@ -76,8 +78,8 @@ export function CursorOverlay({
         backgroundColor: Colors[color],
         left: cursorPos[0],
         top: cursorPos[1],
-        width: cursorScale,
-        height: cursorScale,
+        width: cursorScale * size,
+        height: cursorScale * size,
         pointerEvents: 'none',
       }}
     />
