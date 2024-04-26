@@ -1,4 +1,5 @@
-import { writeFile, readFile } from 'fs/promises';
+import { writeFile, readdir, readFile } from 'fs/promises';
+import { join } from 'path';
 import { createCanvas } from 'canvas';
 import * as board from './board';
 
@@ -20,6 +21,13 @@ export const Colors = [
   '#898d90',
   '#d4d7c9',
 ] as const;
+
+export async function loadLastBackup(path: string) {
+  const files = await readdir(path);
+  const backups = files.filter(x => x.endsWith('.dat')).sort();
+
+  return await readFile(join(path, backups[backups.length - 1]));
+}
 
 export async function backup(path: string) {
   const bitmap = await board.bitmap();

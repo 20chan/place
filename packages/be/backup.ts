@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { backup, dump } from './src/util';
+import { backup, dump, loadLastBackup } from './src/util';
+import { bitmap } from './src/board';
 
 const now = new Date();
 
@@ -20,6 +21,15 @@ async function dumpImage() {
 }
 
 async function main() {
+  console.log(now.toISOString());
+  const lastBackup = await loadLastBackup('backups/');
+  const current = await bitmap();
+
+  if (Buffer.compare(lastBackup, current!) === 0) {
+    console.log('No changes detected');
+    return;
+  }
+
   await backupData();
   await dumpImage();
 }
