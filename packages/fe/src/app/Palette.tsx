@@ -8,7 +8,7 @@ export function Palette({
   setColor: (color: number) => void;
 }) {
   return (
-    <div className='flex flex-row bg-slate-200 gap-2 p-1 flex-wrap w-80 md:w-[40rem] justify-start'>
+    <div className='flex flex-row bg-slate-200 gap-1 md:gap-2 p-1 flex-wrap w-[18.25rem] md:w-[40rem] justify-center'>
       {Colors.map((c, i) => (
         <div
           key={i}
