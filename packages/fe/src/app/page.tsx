@@ -13,7 +13,7 @@ export default function Home() {
   const { socket } = useSocket();
 
   const [color, setColor] = useState(0);
-  const size = 1;
+  const [size, setSize] = useState(1);
 
   const drawHandler = useCallback((x: number, y: number) => {
     for (let i = 0; i < size; i++) {
@@ -28,7 +28,7 @@ export default function Home() {
     }
     draw([x, y, color]);
     requestDraw(x, y, color);
-  }, [color]);
+  }, [size, color]);
 
   const {
     ref,
@@ -144,6 +144,26 @@ export default function Home() {
       }
     }
   }, [handleWheelClick]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (process.env.NEXT_PUBLIC_ALLOW_DRAG !== 'true') {
+      return;
+    }
+
+    if (e.key === '[') {
+      setSize(x => Math.max(1, x - 1));
+    } else if (e.key === ']') {
+      setSize(x => x + 1);
+    }
+  }, [setSize]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [handleKeyDown]);
 
   useEffect(() => {
     const handleContextmenu = (e: any) => {
