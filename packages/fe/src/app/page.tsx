@@ -80,14 +80,8 @@ export default function Home() {
 
         for (let y = 0; y < data.height; y++) {
           for (let x = 0; x < data.width; x++) {
-            const index = Math.floor((x + y * data.width) / 2);
-            const value = u8[index];
-            const isUpper = (x + y * data.width) % 2 === 0;
-            const c = (
-              isUpper
-                ? (value & 0xf0) >> 4
-                : value & 0x0f
-            )
+            const index = x + y * data.width;
+            const c = u8[index];
             const r = parseInt(Colors[c].slice(1, 3), 16);
             const g = parseInt(Colors[c].slice(3, 5), 16);
             const b = parseInt(Colors[c].slice(5, 7), 16);

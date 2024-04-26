@@ -3,7 +3,7 @@ import { redis } from './redis';
 export const WIDTH = 1000;
 export const HEIGHT = 1000;
 
-const boardKey = 'board:u0';
+const boardKey = 'board:u1';
 
 function getOffset(x: number, y: number): number {
   return x + y * WIDTH;
@@ -20,7 +20,7 @@ async function exists() {
 }
 
 async function create() {
-  const bytes = Math.ceil(WIDTH * HEIGHT / 2);
+  const bytes = WIDTH * HEIGHT;
   const buffer = Buffer.alloc(bytes, 0);
 
   await redis.set(boardKey, buffer);
@@ -41,10 +41,10 @@ export async function set(x: number, y: number, c: number) {
 
   const offset = getOffset(x, y);
 
-  await redis.bitfield(boardKey, 'SET', 'u4', `#${offset}`, c);
+  await redis.bitfield(boardKey, 'SET', 'u8', `#${offset}`, c);
 }
 
 export async function get(x: number, y: number) {
   const offset = getOffset(x, y);
-  return await redis.bitfield(boardKey, 'GET', 'u4', `#${offset}`);
+  return await redis.bitfield(boardKey, 'GET', 'u8', `#${offset}`);
 }
