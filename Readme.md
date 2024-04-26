@@ -2,6 +2,8 @@
 
 fully implemented, deployed, but still in development
 
+![preview](preview.png)
+
 ## TODO
 
 - [ ] authentication
