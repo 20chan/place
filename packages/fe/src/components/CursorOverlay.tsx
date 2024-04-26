@@ -75,12 +75,13 @@ export function CursorOverlay({
     <div
       style={{
         position: 'absolute',
-        backgroundColor: Colors[color],
+        // backgroundColor: Colors[color],
         left: cursorPos[0],
         top: cursorPos[1],
         width: cursorScale * size,
         height: cursorScale * size,
         pointerEvents: 'none',
+        outline: '1px solid black',
       }}
     />
   );
