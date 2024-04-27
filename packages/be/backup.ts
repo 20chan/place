@@ -6,15 +6,19 @@ import { bitmap } from './src/board';
 
 const now = new Date();
 
+function formatTime(date: Date) {
+  return date.toISOString().replace(/:/g, '-').replace(/\./g, '-');
+}
+
 async function backupData() {
-  const path = `backups/backup-${now.toISOString()}.dat`;
+  const path = `backups/backup-${formatTime(now)}.dat`;
 
   await backup(path);
   console.log(`Backup saved to ${path}`);
 }
 
 async function dumpImage() {
-  const path = `backups/backup-${now.toISOString()}.bmp`;
+  const path = `backups/backup-${formatTime(now)}.bmp`;
 
   await dump(path);
   console.log(`Image saved to ${path}`);
