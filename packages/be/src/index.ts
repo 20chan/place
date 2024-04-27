@@ -56,6 +56,7 @@ io.on('connection', async (socket) => {
 
 async function main() {
   await board.init();
+  await redis.set('conn', 0);
 
   const PORT = process.env.PORT ?? 3000;
   server.listen(PORT, () => {

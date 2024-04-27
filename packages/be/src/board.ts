@@ -35,7 +35,7 @@ export async function set(x: number, y: number, c: number) {
   if (!Number.isInteger(x) || !Number.isInteger(y) || !Number.isInteger(c)) {
     throw new Error('Invalid input');
   }
-  if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || c < 0 || c > 15) {
+  if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || c < 0 || c > 31) {
     throw new Error('Invalid input');
   }
 
