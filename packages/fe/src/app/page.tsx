@@ -27,8 +27,6 @@ export default function Home() {
         requestDraw(x + i, y + j, color);
       }
     }
-    draw([x, y, color]);
-    requestDraw(x, y, color);
   }, [size, color]);
 
   const {
@@ -49,13 +47,13 @@ export default function Home() {
       draw(data);
     });
 
-    socket.on('conn', (data) => {
+    socket.on('count', (data) => {
       setCcu(data);
     });
 
     return () => {
       socket.off('draw');
-      socket.off('conn');
+      socket.off('count');
     };
   }, [socket]);
 
