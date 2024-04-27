@@ -12,6 +12,7 @@ import { CursorOverlay } from '@/components/CursorOverlay';
 export default function Home() {
   const { socket } = useSocket();
 
+  const [ccu, setCcu] = useState(0);
   const [color, setColor] = useState(0);
   const [size, setSize] = useState(1);
 
@@ -48,8 +49,13 @@ export default function Home() {
       draw(data);
     });
 
+    socket.on('conn', (data) => {
+      setCcu(data);
+    });
+
     return () => {
       socket.off('draw');
+      socket.off('conn');
     };
   }, [socket]);
 
@@ -62,7 +68,10 @@ export default function Home() {
       const data = await res.json() as {
         width: number;
         height: number;
+        conn: number;
       };
+
+      setCcu(data.conn);
 
       ref.current!.width = data.width;
       ref.current!.height = data.height;
@@ -209,6 +218,12 @@ export default function Home() {
 
       <div className='fixed z-10 left-1/2 -translate-x-1/2 bottom-2'>
         <Palette color={color} setColor={setColor} />
+      </div>
+
+      <div className='fixed z-10 top-2 right-2'>
+        <div className='rounded-lg px-4 py-2 bg-white text-black'>
+          {ccu}명 접속중
+        </div>
       </div>
     </div>
   );
