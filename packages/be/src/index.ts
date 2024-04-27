@@ -46,11 +46,11 @@ app.use('/api', router);
 
 io.on('connection', async (socket) => {
   const cnt = await redis.incr('conn');
-  socket.emit('count', cnt);
+  io.emit('count', cnt);
 
   socket.on('disconnect', async () => {
     const cnt = await redis.decr('conn');
-    socket.emit('count', cnt);
+    io.emit('count', cnt);
   });
 });
 
