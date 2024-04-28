@@ -18,7 +18,7 @@ async function backupData() {
 }
 
 async function dumpImage() {
-  const path = `backups/backup-${formatTime(now)}.bmp`;
+  const path = `backups/backup-${formatTime(now)}.png`;
 
   await dump(path);
   console.log(`Image saved to ${path}`);
