@@ -1,3 +1,4 @@
 .env
 backups/
 *.log
+output.mp4
