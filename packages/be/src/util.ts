@@ -39,11 +39,44 @@ export const Colors = [
   '#402811',
 ] as const;
 
-export async function loadLastBackup(path: string) {
+export function parseBackupName(name: string) {
+  const match = name.match(/backup-(.+)\.dat/);
+  if (!match) {
+    return null;
+  }
+
+  const parsed = match[1].match(/(\d{4}-\d{2}-\d{2})T(\d{2}-\d{2}-\d{2})-(\d{3}Z)/);
+  if (!parsed) {
+    return null;
+  }
+
+  const left = parsed[1];
+  const middle = parsed[2].replace(/-/g, ':');
+  const right = parsed[3];
+
+  const iso = `${left}T${middle}.${right}`;
+
+  return new Date(iso);
+}
+
+export function convertBackupName(ts: Date) {
+  return `backup-${ts.toISOString().replace(/:/g, '-').replace(/\./g, '-')}`;
+}
+
+export async function loadBackups(path: string) {
   const files = await readdir(path);
   const backups = files.filter(x => x.endsWith('.dat')).sort();
 
+  return backups;
+}
+
+export async function loadLastBackup(path: string) {
+  const backups = await loadBackups(path);
   return await readFile(join(path, backups[backups.length - 1]));
+}
+
+export async function loadBackupBitmap(path: string) {
+  return await readFile(path);
 }
 
 export async function backup(path: string) {

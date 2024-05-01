@@ -3,10 +3,13 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import * as path from 'path';
+import { readFile } from 'fs/promises';
 import { createServer } from 'http';
 import { createSocket } from './socket';
 import { redis } from './redis';
 import * as board from './board';
+import { convertBackupName, loadBackupBitmap, loadBackups, parseBackupName } from './util';
 
 const app = express();
 const server = createServer(app);
@@ -40,6 +43,22 @@ router.post('/draw', async (req, res) => {
   } catch {
     res.status(400).send('Invalid input');
   }
+});
+
+router.get('/history', async (req, res) => {
+  const backups = await loadBackups('backups/u1/');
+
+  res.json(backups.map(parseBackupName).map(x => x?.getTime()));
+});
+
+router.get('/history/:ts', async (req, res) => {
+  const { ts } = req.params;
+
+  const name = `${convertBackupName(new Date(Number(ts)))}.png`;
+  const buffer = await readFile(path.join('backups/u1', name));
+
+  res.contentType('image/png');
+  res.write(buffer, 'binary', () => res.end(null, 'binary'));
 });
 
 app.use('/api', router);
