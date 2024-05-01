@@ -46,19 +46,25 @@ router.post('/draw', async (req, res) => {
 });
 
 router.get('/history', async (req, res) => {
+  const backupsOld = await loadBackups('backups/u0/');
   const backups = await loadBackups('backups/u1/');
 
-  res.json(backups.map(parseBackupName).map(x => x?.getTime()));
+  res.json([...backupsOld, ...backups].map(parseBackupName).map(x => x?.getTime()));
 });
 
 router.get('/history/:ts', async (req, res) => {
   const { ts } = req.params;
 
-  const name = `${convertBackupName(new Date(Number(ts)))}.png`;
-  const buffer = await readFile(path.join('backups/u1', name));
+  try {
+    const name = `${convertBackupName(new Date(Number(ts)))}.png`;
+    const buffer = await readFile(path.join('backups/u1', name));
 
-  res.contentType('image/png');
-  res.write(buffer, 'binary', () => res.end(null, 'binary'));
+    res.contentType('image/png');
+    res.write(buffer, 'binary', () => res.end(null, 'binary'));
+  } catch {
+    res.status(404).send('Not found');
+    return;
+  }
 });
 
 app.use('/api', router);
