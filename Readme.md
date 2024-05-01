@@ -2,7 +2,7 @@
 
 fully implemented, deployed, but still in development
 
-![preview](preview.png)
+![preview](preview_main.png)
 
 ![preview_history](preview_history.png)
 
