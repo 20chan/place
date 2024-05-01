@@ -37,9 +37,9 @@ export function HistoryViewer({
 
   return (
     <div className='fixed inset-0 bg-black/50 z-20 flex flex-row justify-center items-center'>
-      <div className='mx-4 my-4 max-w-4xl bg-white flex flex-row relative z-30'>
-        <div className='absolute -left-[16rem] top-0 bottom-0 overflow-y-scroll'>
-          <div className='flex flex-col w-[14rem]'>
+      <div className='mx-4 my-4 max-w-4xl flex flex-col gap-4 md:gap-0 md:flex-row relative z-30'>
+        <div className='max-h-36 md:max-h-full bg-white md:absolute md:-left-[16rem] md:top-0 md:bottom-0 overflow-y-scroll'>
+          <div className='flex flex-col md:w-[14rem]'>
             {history.map((h, i) => (
               <div
                 key={i}
@@ -60,7 +60,7 @@ export function HistoryViewer({
           }
         </div>
 
-        <div className='absolute -right-16 top-0'>
+        <div className='md:absolute md:-right-16 md:top-0'>
           <div className='w-14 h-10 bg-red-400 rounded-lg flex justify-center items-center cursor-pointer hover:bg-red-600' onClick={() => setShow(false)}>
             X
           </div>
