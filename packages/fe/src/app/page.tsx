@@ -8,6 +8,7 @@ import { Palette } from './Palette';
 import { SERVER_URL } from '@/lib/consts';
 import { useCanvas } from '@/components/useCanvas';
 import { CursorOverlay } from '@/components/CursorOverlay';
+import { HistoryViewer } from '@/components/HistoryViewer';
 
 export default function Home() {
   const { socket } = useSocket();
@@ -15,6 +16,8 @@ export default function Home() {
   const [ccu, setCcu] = useState(0);
   const [color, setColor] = useState(0);
   const [size, setSize] = useState(1);
+
+  const [showHistory, setShowHistory] = useState(false);
 
   const drawHandler = useCallback((x: number, y: number) => {
     for (let i = 0; i < size; i++) {
@@ -218,11 +221,16 @@ export default function Home() {
         <Palette color={color} setColor={setColor} />
       </div>
 
-      <div className='fixed z-10 top-2 right-2'>
+      <div className='fixed z-10 top-2 right-2 flex flex-row gap-2'>
+        <div className='rounded-lg px-4 py-2 bg-white text-black cursor-pointer hover:bg-slate-200' onClick={() => setShowHistory(true)}>
+          ⏱
+        </div>
         <div className='rounded-lg px-4 py-2 bg-white text-black'>
           {ccu}명 접속중
         </div>
       </div>
+
+      <HistoryViewer show={showHistory} setShow={setShowHistory} />
     </div>
   );
 }
