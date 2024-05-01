@@ -11,14 +11,14 @@ function formatTime(date: Date) {
 }
 
 async function backupData() {
-  const path = `backups/backup-${formatTime(now)}.dat`;
+  const path = `backups/u1/backup-${formatTime(now)}.dat`;
 
   await backup(path);
   console.log(`Backup saved to ${path}`);
 }
 
 async function dumpImage() {
-  const path = `backups/backup-${formatTime(now)}.png`;
+  const path = `backups/u1/backup-${formatTime(now)}.png`;
 
   await dump(path);
   console.log(`Image saved to ${path}`);
@@ -26,7 +26,7 @@ async function dumpImage() {
 
 async function main() {
   console.log(now.toISOString());
-  const lastBackup = await loadLastBackup('backups/');
+  const lastBackup = await loadLastBackup('backups/u1/');
   const current = await bitmap();
 
   if (Buffer.compare(lastBackup, current!) === 0) {
