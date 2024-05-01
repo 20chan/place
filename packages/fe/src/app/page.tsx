@@ -77,8 +77,6 @@ export default function Home() {
       ref.current!.width = data.width;
       ref.current!.height = data.height;
 
-      pz.moveTo(data.width / 2, 0);
-
       ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, data.width, data.height);
 
